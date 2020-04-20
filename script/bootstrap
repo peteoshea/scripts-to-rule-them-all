@@ -14,18 +14,18 @@ if [ -f "Brewfile" ] && [ "$(uname -s)" = "Darwin" ]; then
   }
 fi
 
-if [ -f ".ruby-version" ] && [ -z "$(rbenv version-name 2>/dev/null)" ]; then
-  echo "==> Installing Ruby…"
-  rbenv install --skip-existing
-  which bundle >/dev/null 2>&1  || {
-    gem install bundler
-    rbenv rehash
-  }
-fi
+if [ -f "package.json" ]; then
+  echo "==> Installing nvm (node version manager)…"
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
 
-if [ -f "Gemfile" ]; then
-  echo "==> Installing gem dependencies…"
-  bundle check --path vendor/gems >/dev/null 2>&1  || {
-    bundle install --path vendor/gems --quiet --without production
-  }
+  # Add the following so nvm can be used within this script
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+  echo "==> Installing appropriate version of node…"
+  nvm install --lts
+
+  echo "==> Installing npm dependencies…"
+  npm install
 fi
