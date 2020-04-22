@@ -1,13 +1,16 @@
-#!/bin/sh
+#!/bin/bash
 
-# script/bootstrap: Resolve all dependencies that the application requires to
-#                   run.
+# bootstrap - Script to resolve all dependencies that the application requires to run.
+#
 
+# Drop out if one of the commands fails
 set -e
 
+# Ensure we are working from the top of the project
 cd "$(dirname "$0")/.."
 
-if [ -f "Brewfile" ]; then
+# If Brewfile exists then make sure dependencies are all installed and up to date
+if [[ -f "Brewfile" ]]; then
   echo "==> Installing Homebrew…"
   curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh | bash
 
@@ -17,7 +20,8 @@ if [ -f "Brewfile" ]; then
   }
 fi
 
-if [ -f "package.json" ]; then
+# If package.json file exists then ensure Node.js is setup and run `npm install`
+if [[ -f "package.json" ]]; then
   echo "==> Installing nvm (node version manager)…"
   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
 
