@@ -67,6 +67,34 @@ then
   } || {
     echo "==> Installing Homebrew…"
     curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh | bash
+
+    if [[ $(uname -s) = "Linux" ]]
+    then
+      # Install recommended packages
+      case $package_manager in
+        apt)
+          sudo apt install build-essential
+          ;;
+        yum)
+          sudo yum groupinstall 'Development Tools'
+          ;;
+      esac
+
+      # Add Homebrew environment variables to current shell
+      eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+
+      # Add Homebrew environment variables to local users profile
+      profile="$HOME/.bashrc"
+      echo >> "$profile"
+      echo "# Homebrew environment variables" >> "$profile"
+      /home/linuxbrew/.linuxbrew/bin/brew shellenv >> "$profile"
+    elif [[ $(uname -s) = "Darwin" ]]
+    then
+      echo "Not sure if anything needs to be done here on a Mac???"
+    fi
+
+    # Install gcc as recommended in the next steps
+    brew install gcc
   }
 
   brew bundle check > /dev/null 2>&1 && {
