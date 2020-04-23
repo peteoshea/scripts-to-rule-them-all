@@ -13,17 +13,23 @@ cd "$(dirname "$0")/.."
 package_manager=unknown
 
 function install_apt_pkgs {
-  echo "==> Installing apt packages…"
-  sudo apt update
-  sudo apt -y upgrade
-  sudo apt -y auto-remove
-  sudo apt -y install $(< apt-pkgs)
+  if [[ -f "apt-pkgs" ]]
+  then
+    echo "==> Installing apt packages…"
+    sudo apt update
+    sudo apt -y upgrade
+    sudo apt -y auto-remove
+    sudo apt -y install $(< apt-pkgs)
+  fi
 }
 
 function install_yum_pkgs {
-  echo "==> Installing yum packages…"
-  sudo yum update
-  sudo yum -y install $(< yum-pkgs)
+  if [[ -f "yum-pkgs" ]]
+  then
+    echo "==> Installing yum packages…"
+    sudo yum update
+    sudo yum -y install $(< yum-pkgs)
+  fi
 }
 
 function install_linux_packages {
