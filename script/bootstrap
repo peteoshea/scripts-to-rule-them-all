@@ -10,18 +10,26 @@ set -e
 cd "$(dirname "$0")/.."
 
 # If Brewfile exists then make sure dependencies are all installed and up to date
-if [[ -f "Brewfile" ]]; then
-  echo "==> Installing Homebrew…"
-  curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh | bash
+if [[ -f "Brewfile" ]]
+then
+  command -v brew > /dev/null && {
+    echo "Homebrew is installed"
+  } || {
+    echo "==> Installing Homebrew…"
+    curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh | bash
+  }
 
-  brew bundle check >/dev/null 2>&1  || {
+  brew bundle check > /dev/null 2>&1 && {
+    echo "Homebrew dependencies are up to date"
+  } || {
     echo "==> Installing Homebrew dependencies…"
     brew bundle
   }
 fi
 
 # If package.json file exists then ensure Node.js is setup and run `npm install`
-if [[ -f "package.json" ]]; then
+if [[ -f "package.json" ]]
+then
   echo "==> Installing nvm (node version manager)…"
   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
 
