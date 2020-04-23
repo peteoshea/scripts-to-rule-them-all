@@ -63,7 +63,7 @@ state of the app into shape for the current version that is checked out.
 
 [`script/server`][server] is used to start the application.
 
-For a web application, this might start up any extra processes that the 
+For a web application, this might start up any extra processes that the
 application requires to run in addition to itself.
 
 [`script/update`][update] should be called ahead of any application booting to ensure that
@@ -76,7 +76,9 @@ the application is up to date and can run appropriately.
 A good pattern to support is having an optional argument that is a file path.
 This allows you to support running single tests.
 
-Linting (i.e. rubocop, jshint, pmd, etc.) can also be considered a form of testing. These tend to run faster than tests, so put them towards the beginning of a [`script/test`][test] so it fails faster if there's a linting problem.
+Linting (i.e. rubocop, jshint, pmd, etc.) can also be considered a form of testing.
+These tend to run faster than tests, so put them towards the beginning of a [`script/test`][test]
+so it fails faster if there's a linting problem.
 
 [`script/test`][test] should be called from [`script/cibuild`][cibuild], so it should handle
 setting up the application appropriately based on the environment. For example,
@@ -102,6 +104,26 @@ name, so you can connect to that environment's console.
 
 You should configure and run anything that needs to happen to open a console for
 the requested environment.
+
+## Installing Dependencies
+
+The [`bootstrap`][bootstrap] script allows for a few different package managers as is.
+
+You can use [Homebrew](https://brew.sh/) by creating a `Brewfile` at the top level of the project
+with a list of the packages to be installed. Simply having the `Brewfile` means Homebrew will be
+installed and updated.
+
+If you are on a Debian based Linux system, like Ubuntu, then you can create an `apt-pkgs` file with
+a list of the required packages. You must ensure that this file has Linux line-endings (LF)
+otherwise things may not work as expected.
+
+If you are on a RedHat based Linux system, like CentOS or Fedora, then you can create an `yum-pkgs`
+file with a list of the required packages. Again you must ensure that this file has Linux
+line-endings (LF) otherwise things may not work as expected.
+
+To use [Node.js](https://nodejs.org/) simply create the appropriate `package.json` file at the top
+level and this will ensure Node.js is installed, up to date, and install and update all
+dependencies.
 
 [bootstrap]: script/bootstrap
 [setup]: script/setup

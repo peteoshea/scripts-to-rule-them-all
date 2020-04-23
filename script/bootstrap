@@ -9,6 +9,56 @@ set -e
 # Ensure we are working from the top of the project
 cd "$(dirname "$0")/.."
 
+# Install linux distro specific packages
+package_manager=unknown
+
+function install_apt_pkgs {
+  echo "==> Installing apt packages…"
+  sudo apt update
+  sudo apt -y upgrade
+  sudo apt -y auto-remove
+  sudo apt -y install $(< apt-pkgs)
+}
+
+function install_yum_pkgs {
+  echo "==> Installing yum packages…"
+  sudo yum update
+  sudo yum -y install $(< yum-pkgs)
+}
+
+function install_linux_packages {
+  case $package_manager in
+    apt)
+      install_apt_pkgs
+      ;;
+    yum)
+      install_yum_pkgs
+      ;;
+    *)
+      echo "Not sure which package manager this distro uses so cannot install packages"
+      ;;
+  esac
+}
+
+if [[ $(uname -s) = "Linux" ]]
+then
+  echo "This appears to be a Linux based system"
+
+  . /etc/os-release
+  distro=$ID
+  echo "Current distro is: $distro"
+
+  case $distro in
+    centos | rhel | fedora)
+      package_manager=yum
+      ;;
+    ubuntu | debian)
+      package_manager=apt
+      ;;
+  esac
+  install_linux_packages
+fi
+
 # If Brewfile exists then make sure dependencies are all installed and up to date
 if [[ -f "Brewfile" ]]
 then
