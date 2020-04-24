@@ -1,13 +1,13 @@
 #!/bin/bash
 
-# bootstrap - Script to resolve all dependencies that the application requires to run.
+# bootstrap: Script to resolve all dependencies that the application requires to run.
 #
 
 # Drop out if one of the commands fails
 set -e
 
 # Ensure we are working from the top of the project
-cd "$(dirname "$0")/.."
+cd "$(dirname "$0")/../.."
 
 # Install linux distro specific packages
 package_manager=unknown

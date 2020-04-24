@@ -10,7 +10,7 @@ set -e
 cd "$(dirname "$0")/.."
 
 # Run bootstrap script to resolve dependencies
-script/bootstrap
+script/bin/bootstrap
 
 # Run all database migrations to ensure everything is up to date.
 # echo "==> Updating db…"

@@ -10,7 +10,7 @@ set -e
 cd "$(dirname "$0")/.."
 
 # Run bootstrap script to resolve dependencies
-script/bootstrap
+script/bin/bootstrap
 
 # Reset database to a fresh state
 # echo "==> Setting up DB…"

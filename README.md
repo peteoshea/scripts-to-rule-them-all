@@ -32,14 +32,6 @@ contributions.
 
 The following is a list of scripts and their primary responsibilities.
 
-### script/bootstrap
-
-[`script/bootstrap`][bootstrap] is used solely for fulfilling dependencies of the project.
-
-This can mean RubyGems, npm packages, Homebrew packages, Ruby versions, Git submodules, etc.
-
-The goal is to make sure all required dependencies are installed.
-
 ### script/setup
 
 [`script/setup`][setup] is used to set up a project in an initial state.
@@ -55,7 +47,7 @@ This is also useful for ensuring that your bootstrapping actually works well.
 If you have not worked on the project for a while, running [`script/update`][update] after
 a pull will ensure that everything inside the project is up to date and ready to work.
 
-Typically, [`script/bootstrap`][bootstrap] is run inside this script. This is also a good
+Typically, [`script/bin/bootstrap`][bootstrap] is run inside this script. This is also a good
 opportunity to run database migrations or any other things required to get the
 state of the app into shape for the current version that is checked out.
 
@@ -105,9 +97,21 @@ name, so you can connect to that environment's console.
 You should configure and run anything that needs to happen to open a console for
 the requested environment.
 
+### script/bin/bootstrap
+
+[`script/bin/bootstrap`][bootstrap] is used solely for fulfilling dependencies of the project.
+
+This can mean RubyGems, npm packages, Homebrew packages, Ruby versions, Git submodules, etc.
+
+The goal is to make sure all required dependencies are installed.
+
+This has been moved into a subfolder as there is probably no reason to call this directly.
+[`script/setup`][setup] or [`script/update`][update] would more likely be used in normal use.
+
+
 ## Installing Dependencies
 
-The [`bootstrap`][bootstrap] script allows for a few different package managers as is.
+The [`script/bin/bootstrap`][bootstrap] script allows for a few different package managers as is.
 
 You can use [Homebrew](https://brew.sh/) by creating a `Brewfile` at the top level of the project
 with a list of the packages to be installed. Simply having the `Brewfile` means Homebrew will be
@@ -125,7 +129,7 @@ To use [Node.js](https://nodejs.org/) simply create the appropriate `package.jso
 level and this will ensure Node.js is installed, up to date, and install and update all
 dependencies.
 
-[bootstrap]: script/bootstrap
+[bootstrap]: script/bin/bootstrap
 [setup]: script/setup
 [update]: script/update
 [server]: script/server
