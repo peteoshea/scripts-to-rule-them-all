@@ -4,5 +4,7 @@ addons:
     packages:
       - shellcheck
 script:
-  - shellcheck script/*
+  - shellcheck script/bin/bootstrap
+  - shellcheck script/setup
+  - shellcheck script/update
 sudo: false
