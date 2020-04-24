@@ -1,6 +1,6 @@
 # Scripts To Rule Them All
 
-[![Build Status](https://travis-ci.org/github/scripts-to-rule-them-all.svg?branch=master)](https://travis-ci.org/github/scripts-to-rule-them-all)
+[![Build Status](https://travis-ci.org/github/peteoshea/scripts-to-rule-them-all.svg?branch=master)](https://travis-ci.org/github/peteoshea/scripts-to-rule-them-all)
 
 This is a set of boilerplate scripts describing the [normalized script pattern
 that GitHub uses in its projects](http://githubengineering.com/scripts-to-rule-them-all/). While these
