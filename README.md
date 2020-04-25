@@ -53,6 +53,8 @@ state of the app into shape for the current version that is checked out.
 
 ### script/server
 
+*TODO - Needs converting to bash when actually required.*
+
 [`script/server`][server] is used to start the application.
 
 For a web application, this might start up any extra processes that the
@@ -62,6 +64,8 @@ application requires to run in addition to itself.
 the application is up to date and can run appropriately.
 
 ### script/test
+
+*TODO - Needs converting to bash when actually required.*
 
 [`script/test`][test] is used to run the test suite of the application.
 
@@ -81,6 +85,8 @@ to always ensure that the application is up to date. If called from
 
 ### script/cibuild
 
+*TODO - Needs converting to bash when actually required.*
+
 [`script/cibuild`][cibuild] is used for your continuous integration server.
 This script is typically only called from your CI server.
 
@@ -88,6 +94,8 @@ You should set up any specific things for your environment here before your test
 are run. Your test are run simply by calling [`script/test`][test].
 
 ### script/console
+
+*TODO - Needs converting to bash when actually required.*
 
 [`script/console`][console] is used to open a console for your application.
 
