@@ -1,4 +1,5 @@
-language: bash
+language: shell
+os: linux
 dist: bionic
 addons:
   apt:
@@ -8,4 +9,3 @@ script:
   - shellcheck script/bin/bootstrap
   - shellcheck script/setup
   - shellcheck script/update
-sudo: false
