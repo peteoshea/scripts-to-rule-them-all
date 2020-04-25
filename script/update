@@ -1,13 +1,18 @@
-#!/bin/sh
+#!/bin/bash
 
-# script/update: Update application to run for its current checkout.
+# update: Update application to run for its current checkout.
+#
 
+# Drop out if one of the commands fails
 set -e
 
+# Ensure we are working from the top of the project
 cd "$(dirname "$0")/.."
 
-script/bootstrap
+# Run bootstrap script to resolve dependencies
+script/bin/bootstrap
 
-echo "==> Updating db…"
-# run all database migrations to ensure everything is up to date.
-bin/rake db:migrate
+# Run all database migrations to ensure everything is up to date.
+# echo "==> Updating db…"
+
+echo "==> App is now ready to go!"

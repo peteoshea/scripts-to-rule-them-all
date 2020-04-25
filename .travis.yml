@@ -1,10 +1,11 @@
-language: bash
+language: shell
+os: linux
+dist: bionic
 addons:
   apt:
-    sources:
-    - debian-sid
     packages:
-    - shellcheck
+      - shellcheck
 script:
-  - shellcheck script/*
-sudo: false
+  - shellcheck script/bin/bootstrap
+  - shellcheck script/setup
+  - shellcheck script/update

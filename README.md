@@ -1,6 +1,6 @@
 # Scripts To Rule Them All
 
-[![Build Status](https://travis-ci.org/github/scripts-to-rule-them-all.svg?branch=master)](https://travis-ci.org/github/scripts-to-rule-them-all)
+[![Build Status](https://travis-ci.org/github/peteoshea/scripts-to-rule-them-all.svg?branch=master)](https://travis-ci.org/github/peteoshea/scripts-to-rule-them-all)
 
 This is a set of boilerplate scripts describing the [normalized script pattern
 that GitHub uses in its projects](http://githubengineering.com/scripts-to-rule-them-all/). While these
@@ -32,14 +32,6 @@ contributions.
 
 The following is a list of scripts and their primary responsibilities.
 
-### script/bootstrap
-
-[`script/bootstrap`][bootstrap] is used solely for fulfilling dependencies of the project.
-
-This can mean RubyGems, npm packages, Homebrew packages, Ruby versions, Git submodules, etc.
-
-The goal is to make sure all required dependencies are installed.
-
 ### script/setup
 
 [`script/setup`][setup] is used to set up a project in an initial state.
@@ -55,15 +47,17 @@ This is also useful for ensuring that your bootstrapping actually works well.
 If you have not worked on the project for a while, running [`script/update`][update] after
 a pull will ensure that everything inside the project is up to date and ready to work.
 
-Typically, [`script/bootstrap`][bootstrap] is run inside this script. This is also a good
+Typically, [`script/bin/bootstrap`][bootstrap] is run inside this script. This is also a good
 opportunity to run database migrations or any other things required to get the
 state of the app into shape for the current version that is checked out.
 
 ### script/server
 
+*TODO - Needs converting to bash when actually required.*
+
 [`script/server`][server] is used to start the application.
 
-For a web application, this might start up any extra processes that the 
+For a web application, this might start up any extra processes that the
 application requires to run in addition to itself.
 
 [`script/update`][update] should be called ahead of any application booting to ensure that
@@ -71,12 +65,16 @@ the application is up to date and can run appropriately.
 
 ### script/test
 
+*TODO - Needs converting to bash when actually required.*
+
 [`script/test`][test] is used to run the test suite of the application.
 
 A good pattern to support is having an optional argument that is a file path.
 This allows you to support running single tests.
 
-Linting (i.e. rubocop, jshint, pmd, etc.) can also be considered a form of testing. These tend to run faster than tests, so put them towards the beginning of a [`script/test`][test] so it fails faster if there's a linting problem.
+Linting (i.e. rubocop, jshint, pmd, etc.) can also be considered a form of testing.
+These tend to run faster than tests, so put them towards the beginning of a [`script/test`][test]
+so it fails faster if there's a linting problem.
 
 [`script/test`][test] should be called from [`script/cibuild`][cibuild], so it should handle
 setting up the application appropriately based on the environment. For example,
@@ -87,6 +85,8 @@ to always ensure that the application is up to date. If called from
 
 ### script/cibuild
 
+*TODO - Needs converting to bash when actually required.*
+
 [`script/cibuild`][cibuild] is used for your continuous integration server.
 This script is typically only called from your CI server.
 
@@ -94,6 +94,8 @@ You should set up any specific things for your environment here before your test
 are run. Your test are run simply by calling [`script/test`][test].
 
 ### script/console
+
+*TODO - Needs converting to bash when actually required.*
 
 [`script/console`][console] is used to open a console for your application.
 
@@ -103,7 +105,39 @@ name, so you can connect to that environment's console.
 You should configure and run anything that needs to happen to open a console for
 the requested environment.
 
-[bootstrap]: script/bootstrap
+### script/bin/bootstrap
+
+[`script/bin/bootstrap`][bootstrap] is used solely for fulfilling dependencies of the project.
+
+This can mean RubyGems, npm packages, Homebrew packages, Ruby versions, Git submodules, etc.
+
+The goal is to make sure all required dependencies are installed.
+
+This has been moved into a subfolder as there is probably no reason to call this directly.
+[`script/setup`][setup] or [`script/update`][update] would more likely be used in normal use.
+
+
+## Installing Dependencies
+
+The [`script/bin/bootstrap`][bootstrap] script allows for a few different package managers as is.
+
+You can use [Homebrew](https://brew.sh/) by creating a `Brewfile` at the top level of the project
+with a list of the packages to be installed. Simply having the `Brewfile` means Homebrew will be
+installed and updated.
+
+If you are on a Debian based Linux system, like Ubuntu, then you can create an `apt-pkgs` file with
+a list of the required packages. You must ensure that this file has Linux line-endings (LF)
+otherwise things may not work as expected.
+
+If you are on a RedHat based Linux system, like CentOS or Fedora, then you can create an `yum-pkgs`
+file with a list of the required packages. Again you must ensure that this file has Linux
+line-endings (LF) otherwise things may not work as expected.
+
+To use [Node.js](https://nodejs.org/) simply create the appropriate `package.json` file at the top
+level and this will ensure Node.js is installed, up to date, and install and update all
+dependencies.
+
+[bootstrap]: script/bin/bootstrap
 [setup]: script/setup
 [update]: script/update
 [server]: script/server
