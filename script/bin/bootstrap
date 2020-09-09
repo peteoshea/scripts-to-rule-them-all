@@ -136,23 +136,3 @@ then
     brew bundle
   fi
 fi
-
-# If package.json file exists then ensure Node.js is setup and run `npm install`
-if [[ -f "package.json" ]]
-then
-  echo "==> Installing nvm (node version manager)…"
-  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
-
-  # Add the following so nvm can be used within this script
-  export NVM_DIR="$HOME/.nvm"
-  # shellcheck source=/dev/null
-  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-  # shellcheck source=/dev/null
-  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-  echo "==> Installing appropriate version of node…"
-  nvm install --lts
-
-  echo "==> Installing npm dependencies…"
-  npm install
-fi
