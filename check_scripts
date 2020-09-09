@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Check if arguments are passed allowing call to specific test(s).
+# As an example this calls a simple script to check these shell scripts are valid.
+if [[ -n $@ ]]
+then
+  shellcheck "$@"
+else
+  shellcheck script/setup
+  shellcheck script/update
+  shellcheck script/bin/bootstrap
+fi
