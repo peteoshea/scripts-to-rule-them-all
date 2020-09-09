@@ -2,54 +2,48 @@
 
 [![Build Status](https://travis-ci.org/github/peteoshea/scripts-to-rule-them-all.svg?branch=master)](https://travis-ci.org/github/peteoshea/scripts-to-rule-them-all)
 
-This is a set of boilerplate scripts describing the [normalized script pattern
-that GitHub uses in its projects](http://githubengineering.com/scripts-to-rule-them-all/). While these
-patterns can work for projects based on any framework or language, these
-particular examples are for a simple Ruby on Rails application.
+This is a set of boilerplate scripts based on GitHub's
+[scripts-to-rule-them-all](https://github.com/github/scripts-to-rule-them-all).
 
-## The Idea
-
-If your scripts are normalized by name across all of your projects, your
-contributors only need to know the pattern, not a deep knowledge of the
-application. This means they can jump into a project and make contributions
-without first learning how to bootstrap the project or how to get its tests to
-run.
-
-The intricacies of things like test commands and bootstrapping can be managed by
-maintainers, who have a rich understanding of the project's domain. Individual
-contributors need only to know the patterns and can simply run the commands and
-get what they expect.
+I don't feel that all of these scripts need to be called directly so I am moving some of them into a
+`bin` subfolder to allow reuse without cluttering up the main `script` folder.
 
 ## The Scripts
 
-Each of these scripts is responsible for a unit of work. This way they can be
-called from other scripts.
-
-This not only cleans up a lot of duplicated effort, it means contributors can do
-the things they need to do, without having an extensive fundamental knowledge of
-how the project works. Lowering friction like this is key to faster and happier
-contributions.
-
 The following is a list of scripts and their primary responsibilities.
 
-### script/setup
+### [script/setup][setup]
 
-[`script/setup`][setup] is used to set up a project in an initial state.
-This is typically run after an initial clone, or, to reset the project back to
-its initial state.
+Used to set up a project in an initial state.
+This is typically run after an initial clone, or, to reset the project back to its initial state.
 
-This is also useful for ensuring that your bootstrapping actually works well.
+### [script/update][update]
 
-### script/update
+Used to update the project after a fresh pull.
+This should include any database migrations or any other things required to get the state of the
+app into shape for the current version that is checked out.
 
-[`script/update`][update] is used to update the project after a fresh pull.
+### [script/test][test]
 
-If you have not worked on the project for a while, running [`script/update`][update] after
-a pull will ensure that everything inside the project is up to date and ready to work.
+Used to run the test suite of the project.
+As this script will likely be called from [cibuild][cibuild] it should handle setting things up.
+This will usually be done by a call to [update][update].
 
-Typically, [`script/bin/bootstrap`][bootstrap] is run inside this script. This is also a good
-opportunity to run database migrations or any other things required to get the
-state of the app into shape for the current version that is checked out.
+A good pattern to support is having optional arguments that allow you to run specific tests.
+
+Linting is also be considered a form of testing.
+These tend to run faster than tests, so put them towards the beginning so it fails faster if
+there's a linting problem.
+
+### [script/cibuild][cibuild]
+
+*TODO - Needs converting to bash when actually required.*
+
+[`script/cibuild`][cibuild] is used for your continuous integration server.
+This script is typically only called from your CI server.
+
+You should set up any specific things for your environment here before your tests
+are run. Your test are run simply by calling [`script/test`][test].
 
 ### script/server
 
@@ -63,36 +57,6 @@ application requires to run in addition to itself.
 [`script/update`][update] should be called ahead of any application booting to ensure that
 the application is up to date and can run appropriately.
 
-### script/test
-
-*TODO - Needs converting to bash when actually required.*
-
-[`script/test`][test] is used to run the test suite of the application.
-
-A good pattern to support is having an optional argument that is a file path.
-This allows you to support running single tests.
-
-Linting (i.e. rubocop, jshint, pmd, etc.) can also be considered a form of testing.
-These tend to run faster than tests, so put them towards the beginning of a [`script/test`][test]
-so it fails faster if there's a linting problem.
-
-[`script/test`][test] should be called from [`script/cibuild`][cibuild], so it should handle
-setting up the application appropriately based on the environment. For example,
-if called in a development environment, it should probably call [`script/update`][update]
-to always ensure that the application is up to date. If called from
-[`script/cibuild`][cibuild], it should probably reset the application to a clean state.
-
-
-### script/cibuild
-
-*TODO - Needs converting to bash when actually required.*
-
-[`script/cibuild`][cibuild] is used for your continuous integration server.
-This script is typically only called from your CI server.
-
-You should set up any specific things for your environment here before your tests
-are run. Your test are run simply by calling [`script/test`][test].
-
 ### script/console
 
 *TODO - Needs converting to bash when actually required.*
@@ -105,42 +69,37 @@ name, so you can connect to that environment's console.
 You should configure and run anything that needs to happen to open a console for
 the requested environment.
 
-### script/bin/bootstrap
-
-[`script/bin/bootstrap`][bootstrap] is used solely for fulfilling dependencies of the project.
-
-This can mean RubyGems, npm packages, Homebrew packages, Ruby versions, Git submodules, etc.
-
-The goal is to make sure all required dependencies are installed.
-
-This has been moved into a subfolder as there is probably no reason to call this directly.
-[`script/setup`][setup] or [`script/update`][update] would more likely be used in normal use.
-
-
 ## Installing Dependencies
 
-The [`script/bin/bootstrap`][bootstrap] script allows for a few different package managers as is.
+The [bootstrap][bootstrap] script, called from both [setup][setup] and [update][update] scripts,
+is used solely for fulfilling dependencies of the project.
+This can mean installing packages, updating git submodules, etc.
+The goal is to make sure all required dependencies are installed.
 
-You can use [Homebrew](https://brew.sh/) by creating a `Brewfile` at the top level of the project
-with a list of the packages to be installed. Simply having the `Brewfile` means Homebrew will be
-installed and updated.
+This script currently allows for following package managers:
+
+### [APT](https://en.wikipedia.org/wiki/APT_(software))
 
 If you are on a Debian based Linux system, like Ubuntu, then you can create an `apt-pkgs` file with
-a list of the required packages. You must ensure that this file has Linux line-endings (LF)
-otherwise things may not work as expected.
+a list of the required packages.
+You must ensure that this file has Linux line-endings (LF) otherwise it may not work as expected.
+
+### [yum](https://en.wikipedia.org/wiki/Yum_(software))
 
 If you are on a RedHat based Linux system, like CentOS or Fedora, then you can create an `yum-pkgs`
-file with a list of the required packages. Again you must ensure that this file has Linux
-line-endings (LF) otherwise things may not work as expected.
+file with a list of the required packages.
+You must ensure that this file has Linux line-endings (LF) otherwise it may not work as expected.
 
-To use [Node.js](https://nodejs.org/) simply create the appropriate `package.json` file at the top
-level and this will ensure Node.js is installed, up to date, and install and update all
-dependencies.
+### [Homebrew](https://brew.sh/)
+
+You can use [Homebrew](https://brew.sh/) by creating a `Brewfile` at the top level of the project
+with a list of the packages to be installed.
+Simply having the `Brewfile` means Homebrew will be installed and updated.
 
 [bootstrap]: script/bin/bootstrap
-[setup]: script/setup
-[update]: script/update
-[server]: script/server
-[test]: script/test
 [cibuild]: script/cibuild
 [console]: script/console
+[server]: script/server
+[setup]: script/setup
+[test]: script/test
+[update]: script/update
