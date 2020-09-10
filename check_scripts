@@ -9,4 +9,6 @@ else
   shellcheck script/setup
   shellcheck script/update
   shellcheck script/bin/bootstrap
+  shellcheck script/test
+  shellcheck script/cibuild
 fi
