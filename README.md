@@ -37,13 +37,11 @@ there's a linting problem.
 
 ### [script/cibuild][cibuild]
 
-*TODO - Needs converting to bash when actually required.*
-
-[`script/cibuild`][cibuild] is used for your continuous integration server.
+Used for your continuous integration server.
 This script is typically only called from your CI server.
 
-You should set up any specific things for your environment here before your tests
-are run. Your test are run simply by calling [`script/test`][test].
+You should set up any specific things for your environment here before your tests are run.
+Your tests should be run by simply calling [test][test].
 
 ### script/server
 
