@@ -26,15 +26,35 @@ output_message "Running bootstrap script…"
 
 # Install linux distro specific packages
 package_manager=unknown
+packages_updated=false
 
+function update_packages {
+  if [[ $packages_updated = true ]]
+  then
+    return
+  fi
+
+  case $package_manager in
+    apt)
+      output_message "Updating apt packages…"
+      sudo apt update
+      sudo apt -y upgrade
+      sudo apt -y auto-remove
+      ;;
+    yum)
+      output_message "Updating yum packages…"
+      sudo yum update
+      ;;
+  esac
+  packages_updated=true
+}
+
+# TODO remove abbreviation...
 function install_apt_pkgs {
   if [[ -f "apt-pkgs" ]]
   then
+    update_packages
     output_message "Installing apt packages…"
-    sudo apt update
-    sudo apt -y upgrade
-    sudo apt -y auto-remove
-
     # We need word splitting to install multiple packages on a single line
     # shellcheck disable=SC2046
     sudo apt -y install $(< apt-pkgs)
@@ -44,9 +64,8 @@ function install_apt_pkgs {
 function install_yum_pkgs {
   if [[ -f "yum-pkgs" ]]
   then
+    update_packages
     output_message "Installing yum packages…"
-    sudo yum update
-
     # We need word splitting to install multiple packages on a single line
     # shellcheck disable=SC2046
     sudo yum -y install $(< yum-pkgs)
@@ -101,6 +120,7 @@ then
     if [[ $(uname -s) = "Linux" ]]
     then
       # Install recommended packages
+      update_packages
       case $package_manager in
         apt)
           sudo apt -y install build-essential
