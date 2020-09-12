@@ -1,5 +1,9 @@
 language: shell
 os: linux
 dist: focal
+addons:
+  apt:
+    packages:
+      - shellcheck
 script:
-  - script/cibuild
+  - script/test

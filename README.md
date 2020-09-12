@@ -26,8 +26,8 @@ app into shape for the current version that is checked out.
 ### [script/test][test]
 
 Used to run the test suite of the project.
-As this script will likely be called from [cibuild][cibuild] it should handle setting things up.
-This will usually be done by a call to [update][update].
+To allow this script to be run from CI setup should be done outside of this script.
+A manual call to [update][update] before running the tests is usually a good idea.
 
 A good pattern to support is having optional arguments that allow you to run specific tests.
 

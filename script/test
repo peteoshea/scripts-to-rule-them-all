@@ -9,16 +9,13 @@ set -e
 # Ensure we are working from the top of the project
 cd "$(dirname "$0")/.."
 
-# Ensure everything is up to date before running the tests
-script/update
-
 echo "==> Running tests…"
 echo "Tests started at…"
 date "+%H:%M:%S"
 
 # Check if arguments are passed allowing call to specific test(s).
 # As an example this calls a simple script to check these shell scripts are valid.
-if [[ -n $@ ]]
+if [[ -n $1 ]]
 then
   ./check_scripts "$@"
 else
