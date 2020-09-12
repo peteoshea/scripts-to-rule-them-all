@@ -50,12 +50,12 @@ This script currently allows for following package managers:
 
 ### [APT](https://en.wikipedia.org/wiki/APT_(software))
 
-If you are on a Debian based Linux system, like Ubuntu, then you can create an `apt-pkgs` file with a list of the required packages.
+If you are on a Debian based Linux system, like Ubuntu, then you can create an `apt-packages` file with a list of the required packages.
 You must ensure that this file has Linux line-endings (LF) otherwise it may not work as expected.
 
 ### [yum](https://en.wikipedia.org/wiki/Yum_(software))
 
-If you are on a RedHat based Linux system, like CentOS or Fedora, then you can create an `yum-pkgs` file with a list of the required packages.
+If you are on a RedHat based Linux system, like CentOS or Fedora, then you can create an `yum-packages` file with a list of the required packages.
 You must ensure that this file has Linux line-endings (LF) otherwise it may not work as expected.
 
 ### [Homebrew](https://brew.sh/)

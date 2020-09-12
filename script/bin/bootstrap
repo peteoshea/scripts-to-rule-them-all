@@ -50,35 +50,35 @@ function update_packages {
 }
 
 # TODO remove abbreviation...
-function install_apt_pkgs {
-  if [[ -f "apt-pkgs" ]]
+function install_apt_packages {
+  if [[ -f "apt-packages" ]]
   then
     update_packages
     output_message "Installing apt packages…"
     # We need word splitting to install multiple packages on a single line
     # shellcheck disable=SC2046
-    sudo apt -y install $(< apt-pkgs)
+    sudo apt -y install $(< apt-packages)
   fi
 }
 
-function install_yum_pkgs {
-  if [[ -f "yum-pkgs" ]]
+function install_yum_packages {
+  if [[ -f "yum-packages" ]]
   then
     update_packages
     output_message "Installing yum packages…"
     # We need word splitting to install multiple packages on a single line
     # shellcheck disable=SC2046
-    sudo yum -y install $(< yum-pkgs)
+    sudo yum -y install $(< yum-packages)
   fi
 }
 
 function install_linux_packages {
   case $package_manager in
     apt)
-      install_apt_pkgs
+      install_apt_packages
       ;;
     yum)
-      install_yum_pkgs
+      install_yum_packages
       ;;
     *)
       echo "Not sure which package manager this distro uses so cannot install packages"
