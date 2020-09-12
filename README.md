@@ -35,14 +35,6 @@ Linting is also be considered a form of testing.
 These tend to run faster than tests, so put them towards the beginning so it fails faster if
 there's a linting problem.
 
-### [script/cibuild][cibuild]
-
-Used for your continuous integration server.
-This script is typically only called from your CI server.
-
-You should set up any specific things for your environment here before your tests are run.
-Your tests should be run by simply calling [test][test].
-
 ### script/server
 
 *TODO - Needs converting to bash when actually required.*
@@ -95,7 +87,6 @@ with a list of the packages to be installed.
 Simply having the `Brewfile` means Homebrew will be installed and updated.
 
 [bootstrap]: script/bin/bootstrap
-[cibuild]: script/cibuild
 [console]: script/console
 [server]: script/server
 [setup]: script/setup
