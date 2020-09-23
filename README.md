@@ -64,7 +64,7 @@ You can use [Homebrew](https://brew.sh/) by creating a `Brewfile` at the top lev
 Simply having the `Brewfile` means Homebrew will be installed and updated.
 
 [bootstrap]: script/bin/bootstrap
-[ci.yml]: .github/wokflows/ci.yml
+[ci.yml]: .github/workflows/ci.yml
 [setup]: script/setup
 [test]: script/test
 [update]: script/update
