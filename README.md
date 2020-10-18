@@ -10,8 +10,8 @@ I did not have a reason to call the [bootstrap][bootstrap] script directly so I 
 The `cibuild` script didn't really make sense to me as different CI systems have different requirements so I have removed it.
 As an example the [test][test] script is called directly from the [ci.yml][ci.yml] GitHub action.
 
-As for the `server` and `console` scripts then I haven't had a need for them yet so I've just removed them for now.
-I will recreate them as bash scripts if and when I have a need for them.
+As for the `console` script then I haven't had a need for it yet so I've just removed it for now.
+I will recreate it as a bash script if and when I have a need for it.
 
 I have also created a set of [PowerShell Scripts To Rule Them All](https://github.com/peteoshea/powershell-scripts-to-rule-them-all) for developing also happens on Windows machines.
 
@@ -40,6 +40,14 @@ A good pattern to support is having optional arguments that allow you to run spe
 Linting is also be considered a form of testing.
 These tend to run faster than tests, so put them towards the beginning so it fails faster if there's a linting problem.
 
+### [script/server][server]
+
+Used to start the application.
+
+For a web application, this might start up any extra processes that the application requires to run in addition to itself.
+
+[update][update] should be called ahead of any application booting to ensure that the application is up to date and can run appropriately.
+
 ## Installing Dependencies
 
 The [bootstrap][bootstrap] script, called from both [setup][setup] and [update][update] scripts, is used solely for fulfilling dependencies of the project.
@@ -65,6 +73,7 @@ Simply having the `Brewfile` means Homebrew will be installed and updated.
 
 [bootstrap]: script/bin/bootstrap
 [ci.yml]: .github/workflows/ci.yml
+[server]: script/server
 [setup]: script/setup
 [test]: script/test
 [update]: script/update
