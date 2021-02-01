@@ -1,7 +1,6 @@
 # Scripts To Rule Them All
 
 [![CI](https://github.com/peteoshea/scripts-to-rule-them-all/workflows/CI/badge.svg)](https://github.com/peteoshea/scripts-to-rule-them-all/actions)
-[![Build Status](https://travis-ci.org/peteoshea/scripts-to-rule-them-all.svg?branch=master)](https://travis-ci.org/peteoshea/scripts-to-rule-them-all)
 
 This is a set of boilerplate bash scripts based on GitHub's [scripts-to-rule-them-all](https://github.com/github/scripts-to-rule-them-all).
 
